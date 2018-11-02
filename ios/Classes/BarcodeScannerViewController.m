@@ -81,6 +81,8 @@
 }
 
 - (void)cancel {
+     NSLog(@"Cancel button pressed.");
+    [self.delegate barcodeScannerViewController:self didFailWithErrorCode:@"cancel_pressed"];
     [self dismissViewControllerAnimated:true completion:nil];
 }
 
