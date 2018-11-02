@@ -10,10 +10,30 @@
     [registrar addMethodCallDelegate:instance channel:channel];
 }
 
+- (NSString *)checkPermissionStatus {
+    switch ([AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo]) {
+        case AVAuthorizationStatusAuthorized:
+            return @"authorized";
+            break;
+            
+        case AVAuthorizationStatusDenied:
+        case AVAuthorizationStatusRestricted:
+            return @"denied";
+            break;
+            
+        case AVAuthorizationStatusNotDetermined:
+            return @"not determined";
+            break;
+    }
+    return @"";
+}
+
 - (void)handleMethodCall:(FlutterMethodCall *)call result:(FlutterResult)result {
     if ([@"scan" isEqualToString:call.method]) {
         self.result = result;
         [self showBarcodeView];
+    } else if ([@"status" isEqualToString:call.method]) {
+        result([self checkPermissionStatus]);
     } else {
         result(FlutterMethodNotImplemented);
     }
