@@ -8,4 +8,5 @@ class BarcodeScanner {
       const MethodChannel('com.apptreesoftware.barcode_scan');
   static Future<String> scan() async => await _channel.invokeMethod('scan');
   static Future<String> checkPermissionStatus() async => await _channel.invokeMethod('status');
+  static Future<String> openSettings() async => await _channel.invokeMethod('permission');
 }
