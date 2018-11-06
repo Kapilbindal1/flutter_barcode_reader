@@ -28,12 +28,19 @@
     return @"";
 }
 
+- (NSString *)openAppSettings {
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
+    return @"not settings-open";
+}
+
 - (void)handleMethodCall:(FlutterMethodCall *)call result:(FlutterResult)result {
     if ([@"scan" isEqualToString:call.method]) {
         self.result = result;
         [self showBarcodeView];
     } else if ([@"status" isEqualToString:call.method]) {
         result([self checkPermissionStatus]);
+    } else if ([@"permission" isEqualToString:call.method]) {
+        result([self openAppSettings]);
     } else {
         result(FlutterMethodNotImplemented);
     }
